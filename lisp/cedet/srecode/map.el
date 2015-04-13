@@ -1,6 +1,6 @@
 ;;; srecode/map.el --- Manage a template file map
 
-;; Copyright (C) 2008-2013 Free Software Foundation, Inc.
+;; Copyright (C) 2008-2013, 2015 Free Software Foundation, Inc.
 
 ;; Author: Eric M. Ludlam <eric@siege-engine.com>
 
@@ -359,7 +359,9 @@ Return non-nil if the map changed."
 	  (set-buffer (get-buffer-create " *srecode-map-tmp*"))
 	  (insert-file-contents file nil nil nil t)
 	  ;; Force it to be ready to parse.
-	  (srecode-template-mode)
+	  (condition-case nil
+	      (srecode-template-mode)
+	    (error (throw 'mode-failed 'mode-failed)))
 	  (let ((semantic-init-hook nil))
 	    (semantic-new-buffer-fcn))
 	  )
@@ -401,7 +403,11 @@ Return non-nil if the map changed."
 (defun srecode-map-load-path-set (sym val)
   "Set SYM to the new VAL, then update the srecode map."
   (set-default sym val)
-  (srecode-map-update-map t))
+  (when (eq (catch 'mode-failed (srecode-map-update-map t))
+	    'mode-failed)
+    ;;(message "Skipping SRecode map update: Probably compiling CEDET.")
+    )
+  )
 
 (defcustom srecode-map-load-path
   (list (srecode-map-base-template-dir)
