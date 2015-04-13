@@ -1,6 +1,6 @@
 ;;; semantic/tag-ls.el --- Language Specific override functions for tags
 
-;; Copyright (C) 1999-2004, 2006-2013 Free Software Foundation, Inc.
+;; Copyright (C) 1999-2004, 2006-2013, 2015 Free Software Foundation, Inc.
 
 ;; Author: Eric M. Ludlam <zappo@gnu.org>
 
@@ -454,6 +454,23 @@ something without an implementation."
      ;; No other heuristics.
      (t nil))
     ))
+
+(define-overloadable-function semantic-tag-template (tag)
+  "Return the template specification for TAG, or nil."
+  )
+
+(defun semantic-tag-template-default (tag)
+  "Template specification for TAG, or nil."
+  (semantic-tag-get-attribute tag :template))
+
+(define-overloadable-function semantic-tag-template-specifier (tag)
+  "Return the template specifier specification for TAG, or nil."
+  )
+
+(defun  semantic-tag-template-specifier-default (tag)
+  "Template specifier specification for TAG, or nil."
+  (semantic-tag-get-attribute tag :template-specifier))
+
 
 (provide 'semantic/tag-ls)
 
