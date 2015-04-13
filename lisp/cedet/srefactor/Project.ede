@@ -1,0 +1,21 @@
+;; Object srefactor
+;; EDE Project Files are auto generated: Do Not Edit
+(ede-proj-project "srefactor"
+  :file "Project.ede"
+  :name "srefactor"
+  :targets (list 
+   (ede-proj-target-elisp-autoloads "autoloads"
+    :name "autoloads"
+    :path ""
+    :partofall 'nil
+    )
+   (ede-proj-target-elisp "srefactor"
+    :name "srefactor"
+    :path ""
+    :source '("ui.el" "refactor.el" "util.el" "insert.el" "tags.el")
+    :aux-packages '("cedet-compat" "cedet")
+    :pre-load-packages '("cedet-compat")
+    )
+   )
+  :variables '(("EMACSFLAGS" . "-batch --no-site-file --eval '(setq debug-on-error t)' -l \"../../../cedet-remove-builtin.el\"") ("EMACS" . "@echo \"    > $@\";emacs") ("AUTOGENFLAGS" . "-L ../ --eval '(progn (require (quote cedet-compat)) (require (quote mode-local)))'"))
+  )
