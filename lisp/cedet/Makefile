@@ -18,13 +18,13 @@ ede_FILES=Project.ede Makefile
 LOADDEFS=loaddefs.el
 LOADDIRS=.
 common_LISP=cedet-android.el cedet-compat.el cedet-cscope.el cedet-edebug.el cedet-files.el cedet-global.el cedet-graphviz.el cedet-idutils.el cedet-java.el cedet-m3.el cedet.el data-debug.el fame.el inversion.el mode-local.el pprint.el pulse.el working.el
-init_LISP=semantic.el srecode.el ede.el cogre.el
+init_LISP=semantic.el srecode.el ede.el cogre.el srefactor.el
 VERSION=1.1beta
 DISTDIR=$(top)cedet-topdir-$(VERSION)/cedet
 
 
 
-all: common init srecode semantic EDE Cogre
+all: common init srefactor srecode semantic EDE Cogre
 
 .PHONY: clean-autoloads
 clean-autoloads: 
@@ -46,6 +46,10 @@ common: PRELOADS=cedet-compat
 init: $(addsuffix c, $(init_LISP))
 init: PRELOADS=cedet-compat
 
+.PHONY:srefactor
+srefactor:
+	$(MAKE) -C srefactor
+
 .PHONY:srecode
 srecode:
 	$(MAKE) -C srecode
@@ -63,6 +67,7 @@ Cogre:
 	$(MAKE) -C cogre
 
 tags: 
+	$(MAKE) -C srefactor/ $(MFLAGS) $@
 	$(MAKE) -C srecode/ $(MFLAGS) $@
 	$(MAKE) -C semantic/ $(MFLAGS) $@
 	$(MAKE) -C ede/ $(MFLAGS) $@
@@ -77,6 +82,7 @@ clean:
 dist: autoloads
 	mkdir $(DISTDIR)
 	cp loaddefs.el $(common_LISP) $(init_LISP) $(ede_FILES) $(DISTDIR)
+	$(MAKE) -C srefactor $(MFLAGS) DISTDIR=$(DISTDIR)/srefactor dist
 	$(MAKE) -C srecode $(MFLAGS) DISTDIR=$(DISTDIR)/srecode dist
 	$(MAKE) -C semantic $(MFLAGS) DISTDIR=$(DISTDIR)/semantic dist
 	$(MAKE) -C ede $(MFLAGS) DISTDIR=$(DISTDIR)/ede dist
