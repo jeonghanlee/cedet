@@ -1,6 +1,6 @@
 ;;; cedet-compat.el --- Compatibility across (X)Emacs versions
 
-;; Copyright (C) 2009, 2010 Eric M. Ludlam
+;; Copyright (C) 2009, 2010, 2015 Eric M. Ludlam
 ;; Copyright (C) 2004, 2008, 2010 David Ponce
 
 ;; Author: David Ponce <david@dponce.com>
@@ -77,6 +77,25 @@
 
   ;; Older Emacsen missing the cl-lib package.
   (load "../../etc/fallback-libraries/cl-lib/cl-lib.el"))
+
+;; String handling functions used by srefactor
+(if (not (version< emacs-version "24.4"))
+    (require 'subr-x)
+  (defsubst string-empty-p (string)
+    "Check whether STRING is empty."
+    (string= string ""))
+
+  (defsubst string-trim-left (string)
+    "Remove leading whitespace from STRING."
+    (if (string-match "\\`[ \t\n\r]+" string)
+        (replace-match "" t t string)
+      string))
+
+  (defsubst string-trim-right (string)
+    "Remove trailing whitespace from STRING."
+    (if (string-match "[ \t\n\r]+\\'" string)
+        (replace-match "" t t string)
+      string)))
 
 (when (not (fboundp 'compare-strings))
 
