@@ -1577,14 +1577,6 @@ can't find one of them."
 	(when (semantic-tag-p sc) (semantic-tag-components sc)))
     (semantic-tag-components-default tag)))
 
-(defun semantic-c-tag-template (tag)
-  "Return the template specification for TAG, or nil."
-  (semantic-tag-get-attribute tag :template))
-
-(defun semantic-c-tag-template-specifier (tag)
-  "Return the template specifier specification for TAG, or nil."
-  (semantic-tag-get-attribute tag :template-specifier))
-
 (defun semantic-c-template-string-body (templatespec)
   "Convert TEMPLATESPEC into a string.
 This might be a string, or a list of tokens."
@@ -1600,11 +1592,11 @@ This might be a string, or a list of tokens."
 This string is prefixed with a space, or is the empty string.
 Argument PARENT specifies a parent type.
 Argument COLOR specifies that the string should be colorized."
-  (let ((t2 (semantic-c-tag-template-specifier token))
-	(t1 (semantic-c-tag-template token))
+  (let ((t2 (semantic-tag-template-specifier token))
+	(t1 (semantic-tag-template token))
 	;; @todo - Need to account for a parent that is a template
-	(pt1 (if parent (semantic-c-tag-template parent)))
-	(pt2 (if parent (semantic-c-tag-template-specifier parent)))
+	(pt1 (if parent (semantic-tag-template parent)))
+	(pt2 (if parent (semantic-tag-template-specifier parent)))
 	)
     (cond (t2 ;; we have a template with specifier
 	   (concat " <"
