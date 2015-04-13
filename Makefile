@@ -20,10 +20,11 @@
 PROJECTS=lisp/cedet lisp/speedbar lisp/cedet/cogre lisp/cedet/semantic \
 lisp/cedet/ede lisp/cedet/srecode lisp/cedet/semantic/bovine lisp/cedet/semantic/wisent \
 lisp/cedet/semantic/analyze lisp/cedet/semantic/decorate lisp/cedet/semantic/ectags \
-lisp/cedet/semantic/symref doc/texi doc/texi/semantic
+lisp/cedet/semantic/symref lisp/cedet/srefactor \
+doc/texi doc/texi/semantic
 
 PROJECTS_AUTOLOADS=lisp/cedet lisp/speedbar lisp/cedet/cogre lisp/cedet/semantic \
-lisp/cedet/ede lisp/cedet/srecode
+lisp/cedet/ede lisp/cedet/srecode lisp/cedet/srefactor
 
 EMACS=emacs
 EMACSFLAGS=-batch --no-site-file -l cedet-remove-builtin.el
